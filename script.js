@@ -1,2 +1,26 @@
 //your JS code here. If required.
-const codes = document.querySelectorAll('.code'); codes.forEach((code, index) => { code.addEventListener('input', (e) => { // Only allow digits if (!/^[0-9]$/.test(e.target.value)) { e.target.value = ''; return; } // Move to next input if exists if (e.target.value !== '' && index < codes.length - 1) { codes[index + 1].focus(); } }); code.addEventListener('keydown', (e) => { if (e.key === 'Backspace') { if (code.value === '' && index > 0) { // Move focus back if current is empty codes[index - 1].focus(); codes[index - 1].value = ''; } else { // Clear current field code.value = ''; } } }); });
+const codes = document.querySelectorAll('.code');
+
+codes[0].focus();
+
+codes.forEach((code, index) => {
+    code.addEventListener('keydown', (e) => {
+
+        if (e.key >= 0 && e.key <= 9) {
+            code.value = '';
+            setTimeout(() => {
+                if (codes[index + 1]) {
+                    codes[index + 1].focus();
+                }
+            }, 10);
+        }
+
+        if (e.key === 'Backspace') {
+            setTimeout(() => {
+                if (code.value === '' && codes[index - 1]) {
+                    codes[index - 1].focus();
+                }
+            }, 10);
+        }
+    });
+});
