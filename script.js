@@ -1,26 +1,26 @@
 //your JS code here. If required.
-const codes = document.querySelectorAll('.code');
+const inputs = document.querySelectorAll('.code');
 
-codes[0].focus();
+// Initial focus (VERY IMPORTANT for Cypress)
+inputs[0].focus();
 
-codes.forEach((code, index) => {
-    code.addEventListener('keydown', (e) => {
+inputs.forEach((input, index) => {
 
-        if (e.key >= 0 && e.key <= 9) {
-            code.value = '';
-            setTimeout(() => {
-                if (codes[index + 1]) {
-                    codes[index + 1].focus();
-                }
-            }, 10);
+    input.addEventListener('keyup', (e) => {
+
+        // Forward typing
+        if (e.key >= '0' && e.key <= '9') {
+            if (inputs[index + 1]) {
+                inputs[index + 1].focus();
+            }
         }
 
+        // Backspace handling
         if (e.key === 'Backspace') {
-            setTimeout(() => {
-                if (code.value === '' && codes[index - 1]) {
-                    codes[index - 1].focus();
-                }
-            }, 10);
+            input.value = '';
+            if (inputs[index - 1]) {
+                inputs[index - 1].focus();
+            }
         }
     });
 });
